@@ -10,4 +10,17 @@ async function allUsers() {
   }
 }
 
-module.exports = { allUsers };
+async function createUser(username, email, password) {
+  try {
+    const results = await db.query(
+      "INSERT INTO users (username, email, password) VALUES ($1,$2,$3) RETURNING *",
+      [username, email, password]
+    );
+    return results.rows[0];
+  } catch (error) {
+    console.error("error creating user", error);
+    throw new Error("Failed to create user");
+  }
+}
+
+module.exports = { allUsers, createUser };
