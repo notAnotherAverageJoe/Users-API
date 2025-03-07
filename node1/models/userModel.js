@@ -22,7 +22,7 @@ async function createUser(username, email, password) {
     throw new Error("Failed to create user");
   }
 }
-
+// db call to edit a user
 async function updateUser(id, userData) {
   try {
     const { username, email, password } = userData;
@@ -35,5 +35,14 @@ async function updateUser(id, userData) {
     console.error("Error updating user: ", error);
   }
 }
+// db call for the deletion of a user
+async function deleteUser(id) {
+  try {
+    await db.query("DELETE FROM users WHERE id = $1", [id]);
+    return { message: "User deleted successfully" };
+  } catch (error) {
+    console.error("Error deleting user", error);
+  }
+}
 
-module.exports = { allUsers, createUser, updateUser };
+module.exports = { allUsers, createUser, updateUser, deleteUser };

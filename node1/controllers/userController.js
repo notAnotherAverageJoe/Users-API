@@ -1,5 +1,6 @@
 const userModels = require("../models/userModel");
 const db = require("../config/db");
+const { parse } = require("dotenv");
 
 // Get all users
 const everyUser = async (req, res) => {
@@ -43,4 +44,14 @@ const updateUserinfo = async (req, res) => {
   }
 };
 
-module.exports = { everyUser, newUser, updateUserinfo };
+const userDeleted = async (req, res) => {
+  const userId = parseInt(req.params.id, 10);
+  try {
+    await userModels.deleteUser(userId);
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting user", error });
+  }
+};
+
+module.exports = { everyUser, newUser, updateUserinfo, userDeleted };
