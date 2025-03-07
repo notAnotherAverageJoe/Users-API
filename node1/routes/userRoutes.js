@@ -8,6 +8,6 @@ const {
 
 router.get("/users", everyUser);
 router.post("/users", newUser);
-router.patch("/users", updateUserinfo);
+router.patch("/users/:id", updateUserinfo);
 
 module.exports = router;

@@ -27,7 +27,7 @@ async function updateUser(id, userData) {
   try {
     const { username, email, password } = userData;
     const result = await db.query(
-      "UPDATE users SET username = $1, email = $2, password = $3, WHERE id = $4 RETURNING *",
+      "UPDATE users SET username = $1, email = $2, password = $3 WHERE id = $4 RETURNING *",
       [username, email, password, id]
     );
     return result.rows[0];
@@ -36,4 +36,4 @@ async function updateUser(id, userData) {
   }
 }
 
-module.exports = { allUsers, createUser,updateUser };
+module.exports = { allUsers, createUser, updateUser };

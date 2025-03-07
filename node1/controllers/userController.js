@@ -1,4 +1,5 @@
 const userModels = require("../models/userModel");
+const db = require("../config/db");
 
 // Get all users
 const everyUser = async (req, res) => {
@@ -22,17 +23,23 @@ const newUser = async (req, res) => {
     res.status(500).json({ error: "Error creating user" });
   }
 };
-
+// Patch for user to update information
 const updateUserinfo = async (req, res) => {
   const { id } = req.params;
   const { username, email, password } = req.body;
   try {
-    const result = await db.query(
-      "UPDATE users SET email = $1, email = $2, password = $3 RETURNING *",
-      [username, email, password]
-    );
+    const updatedUser = await userModels.updateUser(id, {
+      username,
+      email,
+      password,
+    });
+    if (!updateUserinfo) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json({ message: "User updated successfully", user: updatedUser });
   } catch (error) {
     console.error("failed to update user", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
