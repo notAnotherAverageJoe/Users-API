@@ -5,12 +5,15 @@ const cors = require("cors");
 
 const app = express();
 const userRoutes = require("./routes/userRoutes");
+const petRoutes = require("./routes/petRoutes");
 
 app.use(express.json());
 app.use(cors());
 
-//user routes
+//User routes
 app.use("/api", userRoutes);
+//Pet routes
+app.use("/api", petRoutes);
 
 const PORT = 4500;
 

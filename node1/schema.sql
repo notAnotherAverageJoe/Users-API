@@ -7,5 +7,11 @@ CREATE TABLE users (
 
 );
 
+CREATE TABLE pets(
+    id serial PRIMARY KEY,
+    petname VARCHAR(30) NOT NULL,
+    user_id INT REFERENCES users(id) ON DELETE CASCADE
+);
+
 INSERT INTO users (username, email, password) VALUES ('pandas','panda@gmail.com','pandamonium');
 INSERT INTO users (username, email, password) VALUES ('wolves','wolves@gmail.com','wolfville');
