@@ -10,11 +10,12 @@ const everyUser = async (req, res) => {
     res.status(500).json({ error: "error fetching users" });
   }
 };
+
 // Create a new user
 const newUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    const user = userModels.createUser(username, email, password);
+    const user = await userModels.createUser(username, email, password);
     return res.status(200).json(user);
   } catch (error) {
     console.error("Failed to create new user", error);
