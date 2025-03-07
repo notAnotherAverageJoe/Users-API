@@ -22,4 +22,18 @@ const newUser = async (req, res) => {
     res.status(500).json({ error: "Error creating user" });
   }
 };
-module.exports = { everyUser, newUser };
+
+const updateUserinfo = async (req, res) => {
+  const { id } = req.params;
+  const { username, email, password } = req.body;
+  try {
+    const result = await db.query(
+      "UPDATE users SET email = $1, email = $2, password = $3 RETURNING *",
+      [username, email, password]
+    );
+  } catch (error) {
+    console.error("failed to update user", error);
+  }
+};
+
+module.exports = { everyUser, newUser, updateUserinfo };

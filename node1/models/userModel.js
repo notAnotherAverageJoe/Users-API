@@ -9,7 +9,7 @@ async function allUsers() {
     console.error("Failed to retrieve all users: ", error);
   }
 }
-
+//db call for creating a new user
 async function createUser(username, email, password) {
   try {
     const results = await db.query(
@@ -23,4 +23,17 @@ async function createUser(username, email, password) {
   }
 }
 
-module.exports = { allUsers, createUser };
+async function updateUser(id, userData) {
+  try {
+    const { username, email, password } = userData;
+    const result = await db.query(
+      "UPDATE users SET username = $1, email = $2, password = $3, WHERE id = $4 RETURNING *",
+      [username, email, password, id]
+    );
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error updating user: ", error);
+  }
+}
+
+module.exports = { allUsers, createUser,updateUser };
