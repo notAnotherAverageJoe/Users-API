@@ -3,4 +3,6 @@ const { fetchPetsByUserId } = require("../controllers/petsController");
 
 const router = express.Router();
 
-router.get("/pets", fetchPetsByUserId);
+router.get("/pets/:id", fetchPetsByUserId);
+
+module.exports = router;
