@@ -10,7 +10,7 @@ async function allUsers() {
     console.error("Failed to retrieve all users: ", error);
   }
 }
-//db call for creating a new user
+//db call for creating a new user with authentication
 async function createUser(username, email, password) {
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -56,4 +56,10 @@ async function deleteUser(id) {
   }
 }
 
-module.exports = { allUsers, createUser, updateUser, deleteUser, find };
+module.exports = {
+  allUsers,
+  createUser,
+  updateUser,
+  deleteUser,
+  findUserByEmail,
+};
