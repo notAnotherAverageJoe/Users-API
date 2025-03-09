@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const authMiddleware = require("../middleware/authMiddleware");
 const {
   everyUser,
   registerUser,
@@ -8,9 +9,9 @@ const {
   loginUser,
 } = require("../controllers/userController");
 
-router.get("/users", everyUser);
-router.post("/users", registerUser);
-router.post("/users", loginUser);
+router.get("/users", authMiddleware, everyUser);
+router.post("/users/register", registerUser);
+router.post("/users/login", loginUser);
 router.patch("/users/:id", updateUserinfo);
 router.delete("/users/:id", userDeleted);
 

@@ -1,5 +1,8 @@
+require("dotenv").config();
+
 const userModels = require("../models/userModel");
 const db = require("../config/db");
+
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
@@ -35,13 +38,13 @@ const registerUser = async (req, res) => {
 };
 
 //login user
-const loginUser = async (res, res) => {
+const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await userModels.findUserByEmail(email);
-    // if the email isnt found inform user
+    // if the email isn't found inform user
     if (!user) {
-      return res.stauts(401).json({ error: "Invalid email or password" });
+      return res.status(401).json({ error: "Invalid email or password" });
     }
     // if the passwords don't match return a 401.
     const matching = await bcrypt.compare(password, user.password);
@@ -49,9 +52,15 @@ const loginUser = async (res, res) => {
       return res.status(401).json({ error: "Invalid password or email" });
     }
 
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-      expiresIn: "2h",
-    });
+    const token = jwt.sign(
+      { userId: user.id, userEmail: user.email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "2h",
+      }
+    );
+    // debugging purposes only v----------------------------v
+    console.log({ usersId: user.id, usersEmail: user.email });
     res.status(200).json({ message: "Successfully logged in.", token });
   } catch (error) {
     console.error("Login failed: ", error);
