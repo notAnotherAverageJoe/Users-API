@@ -1,6 +1,5 @@
 const userModels = require("../models/userModel");
 const db = require("../config/db");
-const { parse } = require("dotenv");
 
 // Get all users
 const everyUser = async (req, res) => {
