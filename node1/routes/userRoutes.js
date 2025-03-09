@@ -12,7 +12,7 @@ const {
 router.get("/users", authMiddleware, everyUser);
 router.post("/users/register", registerUser);
 router.post("/users/login", loginUser);
-router.patch("/users/:id", updateUserinfo);
-router.delete("/users/:id", userDeleted);
+router.patch("/users/:id", authMiddleware, updateUserinfo);
+router.delete("/users/:id", authMiddleware, userDeleted);
 
 module.exports = router;
