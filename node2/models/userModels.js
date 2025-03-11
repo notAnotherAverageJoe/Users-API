@@ -28,6 +28,7 @@ async function createUser(username, email, password) {
     console.error("Failed to create new user", error);
   }
 }
+
 module.exports = {
   searchForUsers,
   getUserByEmail,
