@@ -26,7 +26,25 @@ const userFoundWithEmail = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+const registerUer = async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    const existingUser = await userModels.userFoundWithEmail(email);
+    if (existingUser) {
+      console.log("email aleady in use");
+    }
+    const newUser = await userModels.createUser(username, email, password);
+    return res
+      .status(201)
+      .json({ message: "Successfully created new user", user: newUser });
+  } catch (error) {
+    console.error("Failed to create user", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
 module.exports = {
   collectAllUsers,
   userFoundWithEmail,
+  registerUer,
 };
