@@ -99,10 +99,24 @@ const updateUser = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await userModels.deleteUserById(id);
+    if (!user || user.rowCount === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    return res.status(200).json({ message: "User deleted" });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 module.exports = {
   collectAllUsers,
   userFoundWithEmail,
   registerUer,
   userLogin,
   updateUser,
+  deleteUser,
 };
