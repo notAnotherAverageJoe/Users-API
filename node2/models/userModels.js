@@ -29,8 +29,21 @@ async function createUser(username, email, password) {
   }
 }
 
+async function userChanges(id, usersData) {
+  try {
+    const { username, email, password } = usersData;
+    const query =
+      "UPDATE users SET username = $1, email = $2, password = $3, WHERE id = $4 RETURNING *";
+    const result = await db.query(query, [username, email, password, id]);
+    return result.rows[0];
+  } catch (error) {
+    console.error("Failed to update user", error);
+  }
+}
+
 module.exports = {
   searchForUsers,
   getUserByEmail,
   createUser,
+  userChanges,
 };
