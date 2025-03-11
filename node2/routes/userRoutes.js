@@ -7,11 +7,13 @@ const {
   userFoundWithEmail,
   registerUer,
   userLogin,
+  updateUser,
 } = require("../controllers/userControllers");
 
 router.get("/users", authMiddleware, collectAllUsers);
 router.post("/users", userFoundWithEmail);
 router.post("/users/register", registerUer);
 router.post("/users/login", userLogin);
+router.patch("/users/:id", updateUser);
 
 module.exports = router;

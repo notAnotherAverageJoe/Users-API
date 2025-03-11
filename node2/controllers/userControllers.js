@@ -67,6 +67,7 @@ const userLogin = async (req, res) => {
         expiresIn: "1h",
       }
     );
+    // debugging only
     console.log({
       userId: user.id,
       userEmail: user.email,
@@ -78,9 +79,30 @@ const userLogin = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
+const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { username, email, password } = req.body;
+  try {
+    const user = await userModels.userChanges(id, {
+      username,
+      email,
+      password,
+    });
+
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+    }
+    return res.json({ user });
+  } catch (error) {
+    console.error("Failed to update user", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
 module.exports = {
   collectAllUsers,
   userFoundWithEmail,
   registerUer,
   userLogin,
+  updateUser,
 };
