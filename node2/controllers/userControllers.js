@@ -101,7 +101,7 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  const { id } = req.params;
+  const id = req.user.id;
   try {
     const user = await userModels.deleteUserById(id);
     if (!user || user.rowCount === 0) {
@@ -109,6 +109,7 @@ const deleteUser = async (req, res) => {
     }
     return res.status(200).json({ message: "User deleted" });
   } catch (error) {
+    console.error("delete controller failed to remove user", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };

@@ -45,7 +45,7 @@ async function deleteUserById(id) {
   try {
     const query = "DELETE FROM users WHERE id = $1";
     const result = await db.query(query, [id]);
-    return { message: "User deleted successfully" };
+    return result;
   } catch (error) {
     console.error("Failed to delete user", error);
   }

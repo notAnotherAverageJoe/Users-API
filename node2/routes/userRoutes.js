@@ -16,6 +16,6 @@ router.post("/users", userFoundWithEmail);
 router.post("/users/register", registerUer);
 router.post("/users/login", userLogin);
 router.patch("/users/:id", updateUser);
-router.delete("/users/:id", deleteUser);
+router.delete("/users", authMiddleware, deleteUser);
 
 module.exports = router;
